@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Semaine A/B</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: transparent; /* Fond transparent */
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .fils {
+      width: 2px;
+      height: 100px;
+      background-color: gray; /* Couleur des fils */
+    }
+
+    .pancarte {
+      background-color: white; /* Pancarte blanche */
+      color: white; /* Couleur initiale du texte */
+      font-size: 5rem; /* Taille du texte */
+      font-family: Arial, sans-serif;
+      padding: 50px 80px; /* Grand padding pour la pancarte */
+      border-radius: 10px;
+      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      border: 4px solid black; /* Bordure noire pour l'effet de pancarte */
+    }
+
+    #semaine-label {
+      font-weight: bold;
+      transition: color 0.5s; /* Animation douce pour la couleur */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="fils"></div>
+    <div class="pancarte">
+      <span id="semaine-label"></span>
+    </div>
+    <div class="fils"></div>
+  </div>
+
+  <script>
+    function getWeekNumber(date) {
+      const startOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear = (date - startOfYear) / 86400000;
+      return Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+    }
+
+    function updateSemaineLabel() {
+      const today = new Date();
+      const weekNumber = getWeekNumber(today);
+      const label = document.getElementById("semaine-label");
+
+      if (weekNumber % 2 === 0) {
+        label.textContent = "Semaine A";
+        label.style.color = "red"; /* Texte rouge pour Semaine A */
+      } else {
+        label.textContent = "Semaine B";
+        label.style.color = "blue"; /* Texte bleu pour Semaine B */
+      }
+    }
+
+    updateSemaineLabel();
+  </script>
+</body>
+</html>
